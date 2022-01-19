@@ -1,0 +1,59 @@
+<header class="navbar navbar-dark sticky-top bg-light flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-dark" href="#">
+        <img src="../../../assets/images/logo.jpg" class="img" style="height: 50px;"> Turntabl Codewars Leaderboard</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</header>
+
+<div class="section p-4 bg-dark">
+    <div class="col-md-2 mx-auto">
+        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New User</button>
+    </div>
+    <div class="table text-white">
+        <span class="h5">Leaderboard</span>
+        <table id="example" class="table table-striped mb-3 bg-light rounded text-center" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>UserName</th>
+                    <th>Honour</th>
+                    <th>Overall Rank</th>
+                    <th>Languages</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let leaderboardData of data;let i= index">
+                    <td>{{i+1}}</td>
+                    <td>{{leaderboardData.username}}</td>
+                    <td>{{leaderboardData.honour}}</td>
+                    <td>{{leaderboardData.overall_rank}}</td>
+                    <td><span *ngFor="let languages of leaderboardData.languages; let a = index"> <span style="font-size: 11px;"> {{a+1}}. </span>{{languages.name}} </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-10 mx-auto">
+                    <label class="col-form-label">Enter a UserName</label>
+                    <input [(ngModel)]="username" type="text" name="name" class="form-control" id="name">
+                </div>
+
+                <div class="col-1 mx-auto m-3"> 
+                    <button (click)="addUser()" class="btn btn-info btn-sm mx-auto text-white">Add</button></div>
+            </div>
+
+        </div>
+    </div>
+</div>
