@@ -8,21 +8,77 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
-  leaderboard: Array<LeaderboardModel> = []
-  constructor(private service:LeaderboardService) { }
+  honour_data:any
+  username:String=""
+  users_data: any
+  overall_rank_data:any
+  honour:any
+  selector:any
+  all_users:any
+  overallRank:any
+  language_data: any;
+  language: any;
+  constructor(
+    private leaderboardService : LeaderboardService
+  ) { }
+
   ngOnInit(): void {
-    this.rankedLeaderboard()
-     console.log(this.leaderboard);
+    this.getLeaderBoardByHonour()
+    this.getLeaderBoardAllUsers()
+    this.getLeaderBoardByOverallRank()
+  }
+ 
+  addUser(){
+    const payload = {
+      "id" : this.username
+    }
+    this.leaderboardService.addUser(payload).subscribe(
+      error => {
+        console.log(error)
+      },
+      success => {
+        console.log(success)
+      }
+    )
+    this.getLeaderBoardByHonour()
+  }
+  getLeaderBoardByHonour(){
+    this.leaderboardService.getLeaderboardByHonour().subscribe((data)=>{
+      this.honour_data = data
+      console.log(this.honour_data)
+    })
   }
 
-  rankedLeaderboard(asc = false){
-      this.leaderboard = this.service.getLeaderboard().sort((a, b) => {
-        if (a.honour === b.honour) {
-          // Rank is only important when Honours are the same
-          return a.rank > b.rank ? 1 : -1;
-       }
-        return a.honour > b.honour ? -1 : 1
-      });
+  getLeaderBoardAllUsers(){
+    this.leaderboardService.getLeaderboardAllUsers().subscribe((data)=>{
+      this.users_data = data
+      console.log(this.users_data)
+    })
+  }
+
+  getLeaderBoardByOverallRank(){
+    this.leaderboardService.getLeaderboardByOverallRank().subscribe((data)=>{
+      this.overall_rank_data = data
+      console.log(this.overall_rank_data)
+    })
+  }
+  
+  getLeaderBoardByLanguage(language:any){
+    this.language = language
+    // var selected_language = this.selectLanguage(language)
+    // console.log(selected_language)
+    this.leaderboardService.getLeaderBoardByLanguage(this.language).subscribe((data)=>{
+      this.language_data = data
+      console.log(this.language_data)
+    })
+  }
+  
+  userSelect(selector:any){
+    this.selector = selector
+  }
+
+  selectLanguage(language:any){
+    this.language = language
   }
 
 }
