@@ -41,6 +41,8 @@ export class LeaderboardComponent implements OnInit {
       }
     )
     this.getLeaderBoardByHonour()
+    this.getLeaderBoardAllUsers()
+    this.getLeaderBoardByOverallRank()
   }
   getLeaderBoardByHonour(){
     this.leaderboardService.getLeaderboardByHonour().subscribe((data)=>{
@@ -70,6 +72,7 @@ export class LeaderboardComponent implements OnInit {
     this.leaderboardService.getLeaderBoardByLanguage(this.language).subscribe((data)=>{
       this.language_data = data
       console.log(this.language_data)
+   
     })
   }
   
